@@ -3,7 +3,7 @@
 ## Environment Setup
 You can install python library as you need or use the requirement.txt to help you with the environment.
 ```
-conda create --name <env> --file requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Data Preprocessing
