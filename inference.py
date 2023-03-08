@@ -5,11 +5,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import random
-import opts
+import opt.opts as opts
 import json
 
-from convert_wav2npy import wav2npy
-from model import Audio2Face
+from preprocess.convert_wav2npy import wav2npy
+from model.model import Audio2Face
 
 def test(model, output_size, test_loader):
     """ Do inference

@@ -9,9 +9,9 @@ conda create --name <env> --file requirements.txt
 ## Data Preprocessing
 As we are provided with blendshape weight saved in txt and audio saved in wav, we can use the command as follows to read the data and conver it to numpy format. Then, we can use propare_data.py to concat them together and split them to training and testing sets. (Remember to change the file path)
 ```
-python convert_txt2npy.py
-python convert_wav2npy.py
-python prorpare_data.py
+python preprocess/convert_txt2npy.py
+python preprocess/convert_wav2npy.py
+python preprocess/prorpare_data.py
 ```
 
 ## Train
@@ -46,7 +46,7 @@ python infernece.py \
 ```
 ### Concat data (Remember to change the file path)
 ```
-python concat_mouth_other.py
+python postprocess/concat_mouth_other.py
 ```
 ## Experiment Log
 [Finetune Tencent Document](https://docs.qq.com/sheet/DYVlDcXhEb2RBSHN6?tab=BB08J2&u=02639db8698c4a47991e544165bdf1c0)

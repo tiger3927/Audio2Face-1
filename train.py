@@ -5,14 +5,14 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import random
-import opts
+import opt.opts as opts
 import pickle
 from torch.utils.tensorboard import SummaryWriter
 
 import time
 import logging
 
-from model import losses, Audio2Face
+from model.model import losses, Audio2Face
 
 def get_logger(filename, logger_name=None):
     """set logging file and format

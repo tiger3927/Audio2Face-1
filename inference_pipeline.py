@@ -1,5 +1,5 @@
 from inference import inference
-from concat_mouth_other import concat_mouth_other
+from postprocess.concat_mouth_other import concat_mouth_other
 import json
 
 if __name__ == '__main__':
