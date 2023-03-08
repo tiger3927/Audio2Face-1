@@ -19,12 +19,12 @@ if __name__ == '__main__':
         
         # Test mouth
         model_path = './output_4_16_mine_finetune_lr1e-4_gamma_99_bs_128_mouth/checkpoint/Audio2Face/model_finetune_lr1e-4_gamma_99_bs_128_200.pth'
-        output_mouth = inference(seed, model_path, input_wav, output_mouth_npy, output_mouth_size, fps)
+        output_mouth = inference(seed, 'mouth', model_path, input_wav, output_mouth_npy, output_mouth_size, fps)
         # Output (frames_num, 27)
 
         # Test other
         model_path = './output_mine_other/checkpoint/Audio2Face/modeltest200.pth'
-        output_other = inference(seed, model_path, input_wav, output_other_npy, output_other_size, fps)
+        output_other = inference(seed, 'other', model_path, input_wav, output_other_npy, output_other_size, fps)
         # Output (frames_num, 24)
 
         output_json = concat_mouth_other(output_mouth, output_other, fps)

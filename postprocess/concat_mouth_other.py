@@ -17,10 +17,6 @@ def concat_mouth_other(mouth_data, other_data, fps):
     print('mouth data shape', mouth_data.shape)
     print('other data shape', other_data.shape)
 
-    # Smooth
-    other_data = frames_avg(other_data * 0.5, 'other')
-    mouth_data = frames_avg(mouth_data, 'mouth')
-
     # Concat mouth and other weight (frames_num, 52)
     dim52 = np.hstack((other_data, mouth_data))
     tough_data = np.zeros((other_data.shape[0], 1))

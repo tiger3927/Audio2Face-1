@@ -81,7 +81,7 @@ def dim52todict(dim52, ouptut_dir, fps):
     with open(ouptut_dir, 'w') as f:
         json.dump(output, f)
 
-def inference(seed, model_path, input_wav, output_npy, output_size, fps):
+def inference(seed, location, model_path, input_wav, output_npy, output_size, fps):
     """ Do inference from wav to npy
     Args:
         seed: int, random seed
@@ -138,4 +138,4 @@ if __name__ == '__main__':
     output_size = opt.output_size
     location = opt.location
     fps = opt.fps
-    output_data = inference(seed, model_path, input_wav, output_npy, output_size, fps)
+    output_data = inference(seed, location, model_path, input_wav, output_npy, output_size, fps)
