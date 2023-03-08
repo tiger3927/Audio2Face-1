@@ -1,7 +1,7 @@
 import numpy as np
 import os
 
-def propare_data(project_dir):
+def prepare_data(project_dir):
     """ Concat the data together and split them to training and testing sets
     Args:
         project_dir: str, project dir contains lpc and bs_value
@@ -61,4 +61,4 @@ def propare_data(project_dir):
 
 if __name__ == '__main__':
     project_dir = r'./'
-    propare_data(project_dir)
+    prepare_data(project_dir)
