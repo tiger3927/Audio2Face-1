@@ -9,8 +9,4 @@
 /lpc
 /dataSet_mine
 /bs_value
-<<<<<<< HEAD
-/__pycache__
-=======
 **/__pycache__
->>>>>>> 7b10ada (do infernece and update env)
