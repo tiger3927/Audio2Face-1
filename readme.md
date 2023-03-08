@@ -15,6 +15,7 @@ python preprocess/prepare_data.py
 ```
 
 ## Train
+The train shell code needs to be run on the sever. We will not specify it here.
 ```
 python train.py
 ```
