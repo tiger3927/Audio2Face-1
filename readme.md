@@ -11,7 +11,7 @@ As we are provided with blendshape weight saved in txt and audio saved in wav, w
 ```
 python preprocess/convert_txt2npy.py
 python preprocess/convert_wav2npy.py
-python preprocess/prorpare_data.py
+python preprocess/prepare_data.py
 ```
 
 ## Train
