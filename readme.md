@@ -33,20 +33,22 @@ python inference_pipeline.py
 ```
 python infernece.py \
 --seed 0 \
+--location mouth \
 --input_wav ./tts_audio/20230224154812/20230224154812_tts.wav \
 --fps 30 \
 --model_path ./output_4_16_mine_finetune_lr1e-4_gamma_99_bs_128_mouth/checkpoint/Audio2Face/model_finetune_lr1e-4_gamma_99_bs_128_200.pth \
---output_npy ./tts_audio/20230224154812/20230224154812_mouth.npy \
+--output_json ./tts_audio/20230224154812/20230224154812_mouth.json \
 --output_size 27
 ```
 ### Inference other data
 ```
 python infernece.py \
 --seed 0 \
+--location other \
 --input_wav ./tts_audio/20230224154812/20230224154812_tts.wav \
 --fps 30 \
 --model_path ./output_mine_other/checkpoint/Audio2Face/modeltest200.pth \
---output_npy ./tts_audio/20230224154812/20230224154812_other.npy \
+--output_json ./tts_audio/20230224154812/20230224154812_other.json \
 --output_size 24
 ```
 ### Concat data (Remember to change the file path)

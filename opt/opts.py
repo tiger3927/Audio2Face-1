@@ -31,13 +31,13 @@ def parse_opt_test():
 
     # Basic
     parser.add_argument('--seed', type=int, default=0, help='random seed')
-    parser.add_argument('--location', choice = ['mouse','other'], help='mouse or other location')
+    parser.add_argument('--location', choice = ['mouth','other'], help='mouse or other location')
 
     # Path
     parser.add_argument('--model_path', type=str, default='', help='model path')
     parser.add_argument('--input_wav', type=str, default='', help='model path')
-    parser.add_argument('--output_npy', type=str, default='', help='output npy')
-    parser.add_argument('--output_size', type=int, default=27, help='output size, 27 for mouth, 24 for other')
+    parser.add_argument('--output_json', type=str, default='', help='output json')
+    parser.add_argument('--output_size', choice = [27, 24], help='output size, 27 for mouth, 24 for other')
     parser.add_argument('--fps', type=int, default=30, help='fps')
 
     args = parser.parse_args()

@@ -10,29 +10,7 @@ import json
 
 from preprocess.convert_wav2npy import wav2npy
 from model.model import Audio2Face
-
-def frames_avg(input, type):
-    """Use conv to make frames smoother
-    Args:
-        input: np.array, in shape (frame_num, bs_weight_num)
-        type: str, 'mouth' or 'other'
-    Return:
-        output: np.array, in shape (frame_num, bs_weight_num)
-    """
-    # Kernels for conv
-    kernel_mouth = np.array([0.7, 0.2, 0.1])
-    kernel_other = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2, 0.1]) / 3
-
-    output = np.zeros((input.shape[0], 1))
-    # Split input into different dims
-    for i in range(input.shape[1]):
-        output_f = np.convolve(input[:, i], kernel_mouth, mode="same") \
-            if type == 'mouth' else np.convolve(input[:, i], kernel_other, mode="same")
-        output_f = np.expand_dims(output_f, axis=1)
-        output = np.hstack((output, output_f))
-
-    return output[:, 1:]
-
+from postprocess.post_utils import save_separately
 
 def test(model, output_size, test_loader):
     """ Do inference
@@ -81,7 +59,7 @@ def dim52todict(dim52, ouptut_dir, fps):
     with open(ouptut_dir, 'w') as f:
         json.dump(output, f)
 
-def inference(seed, location, model_path, input_wav, output_npy, output_size, fps):
+def inference(seed, model_path, input_wav, output_json, output_size, location, fps):
     """ Do inference from wav to npy
     Args:
         seed: int, random seed
@@ -120,13 +98,11 @@ def inference(seed, location, model_path, input_wav, output_npy, output_size, fp
     print('test begin')
     output_data = test(model, output_size, test_loader)
 
-    np.save(output_npy, output_data)
-    print(output_data.shape, 'npy array saved to', output_npy)
-    print('test finished!')
-    if location == 'mouse':
-        output_data = frames_avg(output_data, 'mouth')
-    elif location == 'other':
-        output_data = frames_avg(output_data * 0.5, 'other')
+    json_data = save_separately(output_data, location, fps)
+    json.dump(json_data, open(output_json, 'w'))
+    print('json saved to', output_json)
+    print('test finished!\n')
+    
     return output_data
 
 if __name__ == '__main__':
@@ -134,8 +110,8 @@ if __name__ == '__main__':
     seed = opt.seed
     model_path = opt.model_path
     input_wav = opt.input_wav
-    output_npy = opt.output_npy
+    output_json = opt.output_json
     output_size = opt.output_size
     location = opt.location
     fps = opt.fps
-    output_data = inference(seed, location, model_path, input_wav, output_npy, output_size, fps)
+    output_data = inference(seed, model_path, input_wav, output_json, output_size, location, fps)
