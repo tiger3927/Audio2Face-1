@@ -20,11 +20,11 @@ python train.py
 ```
 
 ## Test
-Inference data together (Remember to change the file path)
+### Inference data together (Remember to change the file path)
 ```
 python inference_pipeline.py
 ```
-Inference mouth data
+### Inference mouth data
 ```
 python infernece.py \
 --seed 0 \
@@ -34,7 +34,7 @@ python infernece.py \
 --output_npy ./tts_audio/20230224154812/20230224154812_mouth.npy \
 --output_size 27
 ```
-Inference other data
+### Inference other data
 ```
 python infernece.py \
 --seed 0 \
@@ -44,7 +44,7 @@ python infernece.py \
 --output_npy ./tts_audio/20230224154812/20230224154812_other.npy \
 --output_size 24
 ```
-Concat data (Remember to change the file path)
+### Concat data (Remember to change the file path)
 ```
 python concat_mouth_other.py
 ```
