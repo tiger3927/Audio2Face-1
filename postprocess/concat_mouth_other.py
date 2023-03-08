@@ -3,28 +3,6 @@ import os
 import numpy as np
 import random
 
-def frames_avg(input, type):
-    """Use conv to make frames smoother
-    Args:
-        input: np.array, in shape (frame_num, bs_weight_num)
-        type: str, 'mouth' or 'other'
-    Return:
-        output: np.array, in shape (frame_num, bs_weight_num)
-    """
-    # Kernels for conv
-    kernel_mouth = np.array([0.7, 0.2, 0.1])
-    kernel_other = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2, 0.1]) / 3
-
-    output = np.zeros((input.shape[0], 1))
-    # Split input into different dims
-    for i in range(input.shape[1]):
-        output_f = np.convolve(input[:, i], kernel_mouth, mode="same") \
-            if type == 'mouth' else np.convolve(input[:, i], kernel_other, mode="same")
-        output_f = np.expand_dims(output_f, axis=1)
-        output = np.hstack((output, output_f))
-
-    return output[:, 1:]
-
 def concat_mouth_other(mouth_data, other_data, fps):
     """Concat mouth(27 dims) and other (24 dims)
     Args:
