@@ -125,7 +125,7 @@ def inference(seed, model_path, input_wav, output_npy, output_size, fps):
     print('test finished!')
     if location == 'mouse':
         output_data = frames_avg(output_data, 'mouth')
-    elif location == 'other'
+    elif location == 'other':
         output_data = frames_avg(output_data * 0.5, 'other')
     return output_data
 

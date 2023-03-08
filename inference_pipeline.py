@@ -8,7 +8,6 @@ if __name__ == '__main__':
     for fn in os.listdir('./tts_audio'):
         input_name = fn
         # Can be changed according to your needs
-        input_name = '20230224155047'
         input_wav = './tts_audio/{}/{}_tts.wav'.format(input_name, input_name)
         output_mouth_npy = './tts_audio/{}/{}_mouth.npy'.format(input_name, input_name)
         output_other_npy = './tts_audio/{}/{}_other.npy'.format(input_name, input_name)
