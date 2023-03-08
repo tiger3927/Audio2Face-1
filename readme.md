@@ -1,7 +1,7 @@
 # Audio to Face
 
 ## Environment Setup
-You can install python library as you need or use the requirement.txt to help you with the environment.
+You can install python library as you need or use the requirement.txt to help you with the environment. We recommend python=3.9.
 ```
 pip install -r requirements.txt
 ```
