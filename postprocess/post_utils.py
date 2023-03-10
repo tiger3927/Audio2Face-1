@@ -12,7 +12,7 @@ def frames_avg(input, type):
         output: np.array, in shape (frame_num, bs_weight_num)
     """
     # Kernels for conv
-    kernel_mouth = np.array([0.7, 0.2, 0.1])
+    kernel_mouth = np.array([0.2, 0.6, 0.2])
     kernel_other = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2, 0.1]) / 3
 
     output = np.zeros((input.shape[0], 1))
