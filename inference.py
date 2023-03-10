@@ -79,7 +79,7 @@ def inference(seed, model_path, input_wav, output_json, output_size, location, f
     print('test data len:', x_test.shape[0])
     
     # Convert to tensor
-    x_test = torch.as_tensor(x_test, dtype=torch.float32)[:-1]
+    x_test = torch.as_tensor(x_test, dtype=torch.float32)
 
     # Dataset to DataLoader
     test_loader = torch.utils.data.DataLoader(

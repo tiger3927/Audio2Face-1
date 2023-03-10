@@ -73,7 +73,7 @@ def save_separately(data, location, fps):
 
         # add zeros
         other_data = np.zeros((data.shape[0], 24))
-        tough_data = np.zeros((data.shape[0], 24))
+        tough_data = np.zeros((data.shape[0], 1))
         dim52 = np.hstack((other_data, data, tough_data))
 
         output_frames = []

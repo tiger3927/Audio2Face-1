@@ -11,6 +11,7 @@ if __name__ == '__main__':
         input_wav = './tts_audio/{}/{}_tts.wav'.format(input_name, input_name)
         output_mouth_json = './tts_audio/{}/{}_mouth.json'.format(input_name, input_name)
         output_other_json = './tts_audio/{}/{}_other.json'.format(input_name, input_name)
+        output_path = './tts_audio/{}/{}_total.json'.format(input_name, input_name)
         fps = 30
         
         # Test mouth
@@ -26,7 +27,6 @@ if __name__ == '__main__':
         output_json = concat_mouth_other(output_mouth, output_other, fps)
         # Output {[frames_num, 52]}
 
-        output_path = './tts_audio/{}/{}.json'.format(input_name, input_name)
         with open(output_path, 'w') as f:
             json.dump(output_json, f)
         print('json saved to', output_path, '\n')
