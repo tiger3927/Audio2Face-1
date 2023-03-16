@@ -14,12 +14,17 @@ def frames_avg(input, type):
     # Kernels for conv
     kernel_mouth = np.array([0.2, 0.6, 0.2])
     kernel_other = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2, 0.1]) / 3
+    kernel_head = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1])
 
     output = np.zeros((input.shape[0], 1))
     # Split input into different dims
     for i in range(input.shape[1]):
-        output_f = np.convolve(input[:, i], kernel_mouth, mode="same") \
-            if type == 'mouth' else np.convolve(input[:, i], kernel_other, mode="same")
+        if type == 'mouth':
+            output_f = np.convolve(input[:, i], kernel_mouth, mode="same")
+        elif type == 'other':
+            output_f = np.convolve(input[:, i], kernel_other, mode="same")
+        elif type == 'head':
+            output_f = np.convolve(input[:, i], kernel_head, mode="same")
         output_f = np.expand_dims(output_f, axis=1)
         output = np.hstack((output, output_f))
 
@@ -54,7 +59,7 @@ def random_blink(dim52, bs_names, fps):
         output_frames.append(bs_weight)
     return output_frames
 
-def save_separately(data, location, fps):
+def save_separately(data, location, fps, scale = 1):
     """ Save mouth(27 dims) or other (24 dims) separately
     Args:
         data: np.array, (frame_num, 27)
@@ -69,7 +74,8 @@ def save_separately(data, location, fps):
 
     # Smooth
     if location == 'mouth':
-        data = frames_avg(data, 'mouth')
+        # data = data * 1.5
+        data = frames_avg(data * np.exp(np.abs(data) - 1), 'mouth') * scale 
 
         # add zeros
         other_data = np.zeros((data.shape[0], 24))
@@ -84,7 +90,7 @@ def save_separately(data, location, fps):
                 bs_weight[name] = num
             output_frames.append(bs_weight)
     elif location == 'other':
-        data = frames_avg(data * 0.5, 'other')
+        data = frames_avg(data, 'other') * scale
 
         # add zeros
         mouth_tough_data = np.zeros((data.shape[0], 28))
@@ -92,6 +98,16 @@ def save_separately(data, location, fps):
         
         # Random blink average time
         output_frames = random_blink(dim52, bs_names, fps)
+    elif location == 'head':
+        data = frames_avg(data, 'head') * scale
+
+        output_frames = data.tolist()
+
+        output = {}
+        output['data'] = []
+        for i, frame in enumerate(output_frames):
+            output['data'].append({"facialExpression": {bs_name: 0.0 for bs_name in bs_names}, "time": i * float(1.0 / fps), "headAngles" : frame})
+        return output
         
     print(location, 'data shape after concat', dim52.shape)
         
@@ -103,11 +119,12 @@ def save_separately(data, location, fps):
 
     return output
 
-def concat_mouth_other(mouth_data, other_data, fps):
+def concat_mouth_other(mouth_data, other_data, head_data, fps, mouth_larger = 1, other_smaller = 1, head_larger = 1):
     """Concat mouth(27 dims) and other (24 dims)
     Args:
         mouth_data: np.array, (frame_num, 27)
         other_data: np.array, (frame_num, 24)
+        other_data: np.array, (frame_num, 3)
         fps: int, 30 or 60
     Return:
         output: dict, can be saved as json
@@ -116,10 +133,13 @@ def concat_mouth_other(mouth_data, other_data, fps):
     
     print('mouth data shape', mouth_data.shape)
     print('other data shape', other_data.shape)
+    print('other data shape', head_data.shape)
 
     # Smooth
-    mouth_data = frames_avg(mouth_data, 'mouth')
-    other_data = frames_avg(other_data * 0.5, 'other')
+    mouth_data = frames_avg(mouth_data, 'mouth') * mouth_larger
+    other_data = frames_avg(other_data * other_smaller, 'other')
+    head_data = frames_avg(head_data * head_larger, 'head')
+    head_data = head_data.tolist()
 
     # Concat mouth and other weight (frames_num, 52)
     dim52 = np.hstack((other_data, mouth_data))
@@ -132,8 +152,8 @@ def concat_mouth_other(mouth_data, other_data, fps):
     # Align by frames and set fps
     output = {}
     output['data'] = []
-    for i, frame in enumerate(output_frames):
-        output['data'].append({"facialExpression": frame, "time": i * float(1.0 / fps), "headAngles" : [0, 0, 0]})
+    for i, (frame, h) in enumerate(zip(output_frames, head_data)):
+        output['data'].append({"facialExpression": frame, "time": i * float(1.0 / fps), "headAngles" : h})
 
     return output
 

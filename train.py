@@ -91,11 +91,11 @@ def train(epochs,
             optimizer.step()
             scheduler.step()
             if loss_sum == 0:
-                loss_sum = loss
-                mse_sum = mse
+                loss_sum = loss * train_data.shape[0]
+                mse_sum = mse * train_data.shape[0]
             else:
-                loss_sum += loss
-                mse_sum += mse
+                loss_sum += loss * train_data.shape[0]
+                mse_sum += mse * train_data.shape[0]
         writer.add_scalar('Train/Loss', loss_sum.item(), epoch)
         torch.cuda.synchronize()
         time_end = time.time()
@@ -117,12 +117,12 @@ def train(epochs,
                     predictions, emotion_input = model(test_data.cuda())
                     t_loss, t_mse = loss_object(test_labels.cuda(), (predictions, emotion_input))
                     if loss_sum == 0:
-                        t_loss_sum = t_loss
-                        t_mse_sum = t_mse
+                        t_loss_sum = t_loss * test_data.shape[0]
+                        t_mse_sum = t_mse * test_data.shape[0]
                     else:
-                        t_loss_sum += t_loss
-                        t_mse_sum += t_mse
-            writer.add_scalar('Test/Loss', loss_sum.item(), epoch)
+                        t_loss_sum += t_loss * test_data.shape[0]
+                        t_mse_sum += t_mse * test_data.shape[0]
+            writer.add_scalar('Test/Loss', t_loss_sum.item(), epoch)
             logger.info(
                 # Log the test information
                 f'----- Test '
@@ -133,6 +133,7 @@ def train(epochs,
         if (epoch % save_freq) == 0 or epoch == epochs:
             save_checkpoint_new(checkpoint_save_path, model, optimizer, epoch)
             logger.info(f"----- Save Checkpoint: {checkpoint_save_path}")
+
 
 
 if __name__ == '__main__':
@@ -166,8 +167,8 @@ if __name__ == '__main__':
     # create SummaryWriter
     writer = SummaryWriter(log_dir=output_path)
 
-    checkpoint_save_path = output_path + 'checkpoint/Audio2Face'
-    model_save_path = output_path + 'models/Audio2Face'
+    checkpoint_save_path = os.path.join(output_path, 'checkpoint/Audio2Face')
+    model_save_path = os.path.join(output_path,  'models/Audio2Face')
 
     # Create output folder
     if not os.path.exists(output_path):
@@ -179,8 +180,15 @@ if __name__ == '__main__':
     # Load data
     x_train = np.load(os.path.join(data_dir, 'train_data.npy'))
     x_val = np.load(os.path.join(data_dir, 'val_data.npy'))
-    y_train_path = 'train_label_var_mouth.npy' if output_feature == 'mouth' else 'train_label_var_other.npy'
-    y_val = 'val_label_var_mouth.npy' if output_feature == 'mouth' else 'val_label_var_other.npy'
+    if output_feature == 'mouth':
+        y_train_path = 'train_label_var_mouth.npy'
+        'val_label_var.npy_mouth'
+    elif output_feature == 'other':
+        y_train_path = 'train_label_var_other.npy'
+        y_val = 'val_label_var_other.npy'
+    elif output_feature == 'head':
+        y_train_path = 'train_label_var_head.npy'
+        y_val = 'val_label_var_head.npy'
     y_train = np.load(os.path.join(data_dir, y_train_path))
     y_val = np.load(os.path.join(data_dir, y_val))
 
@@ -217,7 +225,7 @@ if __name__ == '__main__':
         state_dict = torch.load(model_path)
         print('load model from: ', model_path)
         # get rid of fc layer
-        state_dict = {k: v for k, v in state_dict.items() if not k.startswith('OutputLayer.output_layer.3')}
+        state_dict = {k: v for k, v in state_dict.items() if not k.startswith('OutputLayer.output_layer.2')}
         print([k for k, v in state_dict.items()])
 
         model.load_state_dict(state_dict, strict=False)

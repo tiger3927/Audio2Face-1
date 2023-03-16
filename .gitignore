@@ -3,6 +3,8 @@
 /output_4_16_mine_finetune_lr1e-5_mouth
 /output_4_16_mine_finetune_lr2e-5_pre_100_mouth
 /output_4_16_mine_finetune_lr5e-5_mouth
+/dataSet4_16
+output*
 /output_mine
 /output_mine_mouth
 /Participant Data
@@ -10,4 +12,4 @@
 /dataSet_mine
 /bs_value
 **/__pycache__/
-
+*.log

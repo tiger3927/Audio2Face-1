@@ -116,7 +116,7 @@ class OutputLayer(nn.Module):
             nn.Linear(input_size, 150),
             nn.Dropout(keep_pro),
             nn.Linear(150, output_size),
-            nn.Tanh()
+            # nn.Tanh()
         )
     def forward(self, x):
         return self.output_layer(x)

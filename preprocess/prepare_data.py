@@ -16,6 +16,8 @@ def prepare_data(project_dir):
     val_label_var_mouth = []
     train_label_var_other = []
     val_label_var_other = []
+    train_label_var_head = []
+    val_label_var_head = []
 
     name_list = [fn.split('.')[0] for fn in os.listdir('./lpc')]
     data_path_list = [os.path.join(project_dir, 'lpc', i + '.npy') for i in name_list]
@@ -36,6 +38,8 @@ def prepare_data(project_dir):
     data = data[1:]
     label = label[1:]
 
+    print('label', label.shape)
+
     # split data in to train and val
     train_data.extend(data[:-5000,:])
     val_data.extend(data[-5000:])
@@ -43,6 +47,8 @@ def prepare_data(project_dir):
     val_label_var_mouth.extend(label[-5000:, -28:-1])
     train_label_var_other.extend(label[:-5000, -52:-28])
     val_label_var_other.extend(label[-5000:, -52:-28])
+    train_label_var_head.extend(label[:-5000, 4:7] / 180)
+    val_label_var_head.extend(label[-5000:, 4:7] / 180)
 
     print(np.array(train_data).shape)
     print(np.array(val_data).shape)
@@ -58,6 +64,9 @@ def prepare_data(project_dir):
     np.save(os.path.join(dataSet_dir, 'val_label_var_mouth.npy'), np.array(val_label_var_mouth))
     np.save(os.path.join(dataSet_dir, 'train_label_var_other.npy'), np.array(train_label_var_other))
     np.save(os.path.join(dataSet_dir, 'val_label_var_other.npy'), np.array(val_label_var_other))
+    np.save(os.path.join(dataSet_dir, 'train_label_var_head.npy'), np.array(train_label_var_head))
+    np.save(os.path.join(dataSet_dir, 'val_label_var_head.npy'), np.array(val_label_var_head))
+
 
 if __name__ == '__main__':
     project_dir = r'./'

@@ -59,7 +59,7 @@ def dim52todict(dim52, ouptut_dir, fps):
     with open(ouptut_dir, 'w') as f:
         json.dump(output, f)
 
-def inference(seed, model_path, input_wav, output_json, output_size, location, fps):
+def inference(seed, model_path, input_wav, output_json, output_size, location, fps, scale = 1):
     """ Do inference from wav to npy
     Args:
         seed: int, random seed
@@ -68,6 +68,7 @@ def inference(seed, model_path, input_wav, output_json, output_size, location, f
         output_npy: str, output npy path
         output_size: int, output size, 27 for mouth, 24 for other
         fps: int, if is inference data, set the fps
+        scale: float, scale the mouth and other
     """
     # Set random seed
     torch.manual_seed(seed)
@@ -75,7 +76,7 @@ def inference(seed, model_path, input_wav, output_json, output_size, location, f
     random.seed(seed)
 
     # Load data
-    x_test = wav2npy(input_wav, fps = fps)
+    x_test = wav2npy(input_wav, fps = fps) if(type(input_wav) == type('str')) else input_wav
     print('test data len:', x_test.shape[0])
     
     # Convert to tensor
@@ -98,7 +99,7 @@ def inference(seed, model_path, input_wav, output_json, output_size, location, f
     print('test begin')
     output_data = test(model, output_size, test_loader)
 
-    json_data = save_separately(output_data, location, fps)
+    json_data = save_separately(output_data, location, fps, scale)
     json.dump(json_data, open(output_json, 'w'))
     print('json saved to', output_json)
     print('test finished!\n')

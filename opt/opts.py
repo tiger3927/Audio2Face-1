@@ -31,7 +31,7 @@ def parse_opt_test():
 
     # Basic
     parser.add_argument('--seed', type=int, default=0, help='random seed')
-    parser.add_argument('--location', choice = ['mouth','other'], help='mouse or other location')
+    parser.add_argument('--location', choice = ['mouth','other','head'], help='mouse or other location')
 
     # Path
     parser.add_argument('--model_path', type=str, default='', help='model path')
