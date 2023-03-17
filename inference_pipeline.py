@@ -15,9 +15,9 @@ if __name__ == '__main__':
         output_head_json = './tts_audio/{}/{}_head.json'.format(input_name, input_name)
         output_path = './tts_audio/{}/{}_total.json'.format(input_name, input_name)
         fps = 30
-        mouth_larger = 1.5
+        mouth_larger = 1.2
         other_smaller = 0.5
-        head_larger = 2
+        head_larger = 3.14
         
         
         x_test = wav2npy(input_wav, fps = fps)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         # Output (frames_num, 24)
 
         # Test other
-        model_path = './output_mine_head_lr_1e-4_gamma_0.99_bs_128_head_head\checkpoint\Audio2Face\model_lr_1e-4_gamma_0.99_bs_128_head_10.pth'
+        model_path = './output_mine_head_lr_1e-4_gamma_0.99_bs_128_head_head\checkpoint\Audio2Face\model_lr_1e-4_gamma_0.99_bs_128_head_400.pth'
         output_head = inference(seed, model_path, x_test, output_head_json, 3, 'head', fps, head_larger)
         # Output (frames_num, 7)
 

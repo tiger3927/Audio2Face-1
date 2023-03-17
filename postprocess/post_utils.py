@@ -14,7 +14,7 @@ def frames_avg(input, type):
     # Kernels for conv
     kernel_mouth = np.array([0.2, 0.6, 0.2])
     kernel_other = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2, 0.1]) / 3
-    kernel_head = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1])
+    kernel_head = np.array([0.1, 0.2, 0.2, 0.3, 0.3, 0.3, 0.3, 0.2, 0.2, 0.1]) / 2.2
 
     output = np.zeros((input.shape[0], 1))
     # Split input into different dims
@@ -75,7 +75,7 @@ def save_separately(data, location, fps, scale = 1):
     # Smooth
     if location == 'mouth':
         # data = data * 1.5
-        data = frames_avg(data * np.exp(np.abs(data) - 1), 'mouth') * scale 
+        data = frames_avg(data, 'mouth') * scale
 
         # add zeros
         other_data = np.zeros((data.shape[0], 24))
@@ -99,7 +99,7 @@ def save_separately(data, location, fps, scale = 1):
         # Random blink average time
         output_frames = random_blink(dim52, bs_names, fps)
     elif location == 'head':
-        data = frames_avg(data, 'head') * scale
+        data = frames_avg(data * np.exp(np.abs(data) - 1), 'head') * scale 
 
         output_frames = data.tolist()
 
@@ -138,7 +138,7 @@ def concat_mouth_other(mouth_data, other_data, head_data, fps, mouth_larger = 1,
     # Smooth
     mouth_data = frames_avg(mouth_data, 'mouth') * mouth_larger
     other_data = frames_avg(other_data * other_smaller, 'other')
-    head_data = frames_avg(head_data * head_larger, 'head')
+    head_data = frames_avg(head_data * head_larger * np.exp(np.abs(head_data) - 1), 'head') 
     head_data = head_data.tolist()
 
     # Concat mouth and other weight (frames_num, 52)
