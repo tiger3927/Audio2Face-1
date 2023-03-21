@@ -1,10 +1,10 @@
-gpu=6
+gpu=7
 
-id='lr_1e-3_gamma_0.9_bs_32_head'
+id='lr_1e-4_gamma_0.99_bs_128_head'
 log="$id.log"
-lr=0.001
-gamma=0.9
-bs=32
+lr=0.0001
+gamma=0.99
+bs=128
 epoch=400
 
 dataset='dataSet_mine'

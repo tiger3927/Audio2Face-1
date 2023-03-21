@@ -29,7 +29,9 @@ sh train_fintune_yx.sh // for mouth data
 ## Test
 ### Inference data together (Remember to change the file path)
 ```
-python inference_pipeline.py
+python inference_pipeline.py \
+--input_wav ./tts_audio/20230224154812/20230224154812_tts.wav \
+--fps 30
 ```
 ### Inference mouth data
 ```
