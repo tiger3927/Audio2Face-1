@@ -16,7 +16,7 @@ if __name__ == '__main__':
     output_mouth_json = input_wav.replace('.wav','_mouth.json')
     output_other_json = input_wav.replace('.wav','_other.json')
     output_head_json = input_wav.replace('.wav','_head.json')
-    output_path = input_wav.replace('.wav','total.json')
+    output_path = input_wav.replace('.wav','_total.json')
     fps = opt.fps
     mouth_larger = 1.2
     other_smaller = 0.5
