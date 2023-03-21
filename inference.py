@@ -115,4 +115,5 @@ if __name__ == '__main__':
     output_size = opt.output_size
     location = opt.location
     fps = opt.fps
-    output_data = inference(seed, model_path, input_wav, output_json, output_size, location, fps)
+    scale = opt.scale
+    output_data = inference(seed, model_path, input_wav, output_json, output_size, location, fps, scale)
