@@ -162,13 +162,16 @@ if __name__ == '__main__':
     other_data_path = ''
     output_path = ''
     fps = 30
+    mouth_larger = 1.2
+    other_smaller = 0.5
+    head_larger = 3.14
 
     print('read mouth data form', mouth_data_path)
     mouth_data = np.load(mouth_data_path)
     print('read other data form', other_data_path)
     other_data = np.load(other_data_path)
     
-    output_json = concat_mouth_other(mouth_data, other_data, fps)
+    output_json = concat_mouth_other(mouth_data, other_data, fps, mouth_larger, other_smaller, head_larger)
     
     with open(output_path, 'r') as f:
         json.dump(output_json, f)

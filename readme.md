@@ -11,17 +11,19 @@ pip install -r requirements.txt
 ```
 
 ## Train
-The train shell code needs to be run on the sever. We will not specify it here.
-```
-python train.py
-```
-
 ### Data Preprocessing
 As we are provided with blendshape weight saved in txt and audio saved in wav, we can use the command as follows to read the data and conver it to numpy format. Then, we can use propare_data.py to concat them together and split them to training and testing sets. (Remember to change the file path)
 ```
 python preprocess/convert_txt2npy.py
 python preprocess/convert_wav2npy.py
 python preprocess/prepare_data.py
+```
+### Train Shell Command
+The train shell code needs to be run on the sever. We will not specify it here.
+```
+sh train_yx.sh // for other data
+sh train_head_yx.sh // for head data
+sh train_fintune_yx.sh // for mouth data
 ```
 
 ## Test
