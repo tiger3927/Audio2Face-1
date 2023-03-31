@@ -12,6 +12,8 @@ def wav2npy(wav_path, b_frames = -1, fps = -1):
     """
     # read wav file
     rate, signal = wavfile.read(wav_path)
+    if(len(signal.shape) == 2):
+        signal = np.mean(signal, axis=1)
 
     # check if inference or training data
     frames_per_second = b_frames / (float(len(signal)) / rate) if fps < 0 else fps

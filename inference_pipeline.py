@@ -22,7 +22,7 @@ if __name__ == '__main__':
     other_smaller = 0.5
     head_larger = 3.14
     
-    
+
     x_test = wav2npy(input_wav, fps = fps)
     # Test mouth
     model_path = './output_4_16_mine_finetune_lr1e-4_gamma_99_bs_128_mouth/checkpoint/Audio2Face/model_finetune_lr1e-4_gamma_99_bs_128_200.pth'
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # Output (frames_num, 24)
 
     # Test other
-    model_path = './output_mine_head_lr_1e-4_gamma_0.99_bs_128_head_head\checkpoint\Audio2Face\model_lr_1e-4_gamma_0.99_bs_128_head_400.pth'
+    model_path = './output_mine_head_lr_1e-4_gamma_0.99_bs_128_head_head/checkpoint/Audio2Face/model_lr_1e-4_gamma_0.99_bs_128_head_400.pth'
     output_head = inference(seed, model_path, x_test, output_head_json, 3, 'head', fps, head_larger)
     # Output (frames_num, 7)
 
