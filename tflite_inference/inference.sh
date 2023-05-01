@@ -1,0 +1,1 @@
+python inference_pipeline.py --input_wav 20230224154918/20230224154918_tts.wav --fps 30

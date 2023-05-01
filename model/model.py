@@ -94,7 +94,7 @@ class ArticulationLayer(nn.Module):
             self.articulation_layer_2.append(sub_layer_2)
 
     def forward(self, x):
-        emotion_input = torch.tile(self.emotion, (x.shape[0], 1, 1, 1))
+        emotion_input = self.emotion.repeat(x.shape[0], 1, 1, 1)
         for i in range(len(self.kernels_size)):
             conv_x = self.articulation_layer_1[i](x)
             emotion_x = self.articulation_layer_2[i](emotion_input)

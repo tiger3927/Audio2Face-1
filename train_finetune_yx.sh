@@ -1,16 +1,16 @@
 gpu=7
 
-id='finetune_8_lr1e-4_gamma_99_bs_128'
+id='finetune_lr1e-4_gamma_99_bs_128'
 log="$id.log"
 lr=0.0001
 gamma=0.99
 bs=128
 epoch=400
 
-dataset='dataSet_mine'
-output_path='./output_4_16_mine'
+dataset='dataSet_mead'
+output_path='./output_4_16_mead'
 output_feature='mouth'
-model_path='./output4_16_lr_1e-4_gamma_0.99_bs_8_mouth/checkpoint/Audio2Face/model_lr_1e-4_gamma_0.99_bs_8_180.pth'
+model_path='./output4_16/checkpoint/Audio2Face/modeltest200.pth'
 
 mkdir $LOG
 python train.py \

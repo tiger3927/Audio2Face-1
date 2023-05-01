@@ -182,7 +182,7 @@ if __name__ == '__main__':
     x_val = np.load(os.path.join(data_dir, 'val_data.npy'))
     if output_feature == 'mouth':
         y_train_path = 'train_label_var_mouth.npy'
-        'val_label_var.npy_mouth'
+        y_val = 'val_label_var_mouth.npy'
     elif output_feature == 'other':
         y_train_path = 'train_label_var_other.npy'
         y_val = 'val_label_var_other.npy'
